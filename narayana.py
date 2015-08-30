@@ -46,6 +46,12 @@ def access_post():
     return render_template('accessresults.html', thoughts=json.dumps(custsubs))
 
 
+@app.route('/logs', methods=['GET'])
+def logs_get():
+    custsubs = db.all()
+    return render_template('accessresults.html', thoughts=json.dumps(custsubs))
+
+
 if __name__ == '__main__':
     app.jinja_env.cache = {}
     app.run()
