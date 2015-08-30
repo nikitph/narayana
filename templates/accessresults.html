@@ -1,0 +1,124 @@
+{% extends "template.html" %}
+{% block script %}
+
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function () {
+
+            var msg = {{ thoughts|safe }};
+            var timeseries = [];
+            for (var i = 0; i < msg.length; i++) {
+                var b = msg[i];
+                $('#commentary').append('<a href="" class="collection-item">' + b.thoughts + '</a>');
+                var t = new Date(b.time);
+                var l = b.level;
+                timeseries.push({'time': t, 'level': l});
+
+            }
+
+            loadgraph(timeseries);
+
+
+        });
+
+        function loadgraph(d) {
+            var data1 = d;
+
+            MG.data_graphic({
+                description: "This graphic shows a time-series of downloads.",
+                data: data1,
+
+                area: false,
+                show_tooltips: true,
+                animate_on_load: true,
+                chart_type: 'line',
+                target: '#commentary2',
+                x_accessor: 'time',
+                        interpolate: 'basic',
+
+                y_accessor: 'level',
+                x_rug: true,
+                y_rug: true,
+                x_axis: true,
+                y_axis: true,
+                show_secondary_x_label: false,
+        show_confidence_band: ['l', 'u'],
+        x_extended_ticks: true
+            });
+        }
+    </script>
+
+
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <form action="" method="">
+            <div class="section">
+
+
+                <!--   Icon Section   -->
+                <div class="row">
+                    <div class="col s12 m3">
+                        <div class="icon-block">
+                            <br>
+                        </div>
+                    </div>
+
+                    <div class="col s12 m2 hvr-sweep-to-right" style="height: 150px;background: #c4d455">
+                        <div class="icon-block">
+                            <h4 class="center white-text"><i class="material-icons medium">list</i></h4>
+                            <h6 class="center" style="font-weight: 300;">Results</h6>
+
+                        </div>
+                    </div>
+
+
+                    <div class="col s12 m4">
+
+                        <div class="icon-block center">
+                            <h5 style="font-weight: 200;" class="center">List of Dysfunctional thoughts</h5>
+
+                        </div>
+
+
+                        <div class="icon-block center">
+                            <div id="commentary" class="collection">
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="col s12 m3">
+                        <div class="icon-block">
+                            <br>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col s12 m3">
+                        <div class="icon-block">
+                            <br>
+                        </div>
+                    </div>
+                    <div class="col s12 m6">
+                        <div class="icon-block">
+                             <div id="commentary2">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s12 m3">
+                        <div class="icon-block">
+                            <br>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}
